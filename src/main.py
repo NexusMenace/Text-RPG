@@ -1,14 +1,5 @@
 # Made by NexusMenace
 
-import json
-from pathlib import Path
-
-def loadClasses():
-    HERE = Path(__file__).parent
-    with open(HERE / 'data' / 'classes.json', 'r') as file:
-        data = json.load(file)
-        # print(str(data["Fighter"][0]["damage"]))
-
 def settings():
     print("Please choose difficulty scale. (0.5 - 3.0)")
     while True:
