@@ -1,5 +1,5 @@
 # Made by NexusMenace
 
-import main
+from src import main
 
 main.settings()
