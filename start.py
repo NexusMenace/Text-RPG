@@ -4,4 +4,4 @@ from src import main
 from src import load
 
 load.loadClasses()
-main.settings()
+main.runGame()
