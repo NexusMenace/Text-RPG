@@ -1,8 +1,11 @@
 # Made by NexusMenace
 
-from src import load
+# Imports
+from src import load # Imports functions and data from load.py
+from src import player as plr # Imports Player Class from player.py
+from random import randint
 
-def settings():
+def settings(): # Allows the player to select difficulty scale.
     print("Please choose difficulty scale. (0.5 - 3.0)")
     while True:
         diff_str = input("> ").strip()
@@ -18,7 +21,7 @@ def settings():
             print("Out of range — enter a value between 0.5 and 3.0")
             continue
 
-def selectClass():
+def selectClass(): # Class selection function
     print("Please select your class.")
     print("Type 'list' to list available classes.")
     print("Type 'stat' to list classes HP and DMG.")
@@ -39,39 +42,44 @@ def selectClass():
             print(f"{classInp} class selected.")
             return classInp
 
-def gameLoop(user, diff):
+def gameLoop(user, diff): # Main game loop function
+    print("Type 'end' to end game.")
+    print("Type 'stat' to list player stats.")
+    print("Type 'fight' to fight a random enemy.")
+    print("Type 'rest' to heal 5-8 health.")
+
+    commands = [
+        "end",
+        "stat",
+        "fight",
+        "rest"
+    ]
+
     while True:
-        print("Type 'end' to end game.")
         inp = input("> ")
-        if inp == "end":
+        if inp.lower() == "end":
             break
-    print("Game Over!")
+        if inp.lower() == "stat":
+            print("Player Stats:")
+            print(f"Health: {user.hp}")
+            print(f"Damage: {user.dmg}")
+            print(f"Gold: {user.gold}")
+            print()
+        if inp.lower() == "fight":
+            print("Feature not implemented yet, sorry.")
+        if inp.lower() == "rest":
+            ham = randint(5, 8)
+            user.HealPlayer(ham)
+            print(f"You have been healed {ham} HP!")
+        if not inp.lower() in commands:
+            print(f"{inp} is not a command.")
 
-class Player:
-    def __init__(self, MaxHP, dmg):
-        self.hp = int(MaxHP)
-        self.dmg = int(dmg)
-        self.gold = 0
-        self.kills = 0
-    
-    def isAlive(self):
-        if self.hp > 0:
-            return True
-        else:
-            return False
-    
-    def setHP(self, val):
-        self.hp = val
-    
-    def HealPlayer(self, val):
-        self.hp += val
-    
-    def HarmPlayer(self, val):
-        self.hp -= val
 
-def runGame():
+def runGame(): # Main function, sets up variables for game
     diff = settings()
     userClass = selectClass()
     ind = load.classes.index(userClass)
-    user = Player(load.health[ind], load.damage[ind])
+    user = plr.Player(load.health[ind], load.damage[ind])
+
     gameLoop(user, diff)
+    print("Game Over!")
